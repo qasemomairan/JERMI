@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>جُرمي - منصة التقدّم واللياقة | الكابتن محمد بن سلّوم</title>
+    
+    <!-- خط Tajawal من Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome للإيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-body: #080b10;
+            --bg-card: rgba(22, 28, 36, 0.75);
+            --bg-card-solid: #161c24;
+            --bg-input: #0e131b;
+            --primary: #ff5e00;
+            --primary-glow: rgba(255, 94, 0, 0.35);
+            --primary-hover: #e05300;
+            --secondary: #00e5ff;
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --text-muted: #6b7280;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(255, 94, 0, 0.3);
+            --danger: #ef4444;
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --glass-backdrop: blur(16px);
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.light-mode {
+            --bg-body: #f4f6f9;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --bg-card-solid: #ffffff;
+            --bg-input: #eef2f6;
+            --text-main: #111827;
+            --text-sub: #4b5563;
+            --text-muted: #9ca3af;
+            --border: rgba(0, 0, 0, 0.08);
+            --border-highlight: rgba(255, 94, 0, 0.4);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 12px;
+            transition: background-color var(--transition), color var(--transition);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(255, 94, 0, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 229, 255, 0.03) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .app-shell {
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-backdrop);
+            -webkit-backdrop-filter: var(--glass-backdrop);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow);
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .app-header {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), #ff8c00);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 20px;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .brand-text h1 {
+            font-size: 20px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--text-main), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .page {
+            display: none;
+            padding: 20px;
+            flex: 1;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .page.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+        }
+
+        .login-hero i {
+            font-size: 60px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 20px var(--primary-glow));
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .input-wrapper { position: relative; }
+        .input-wrapper i {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 14px 44px 14px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .custom-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), #e05300);
+            border: none;
+            border-radius: var(--radius-lg);
+            color: #000;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 25px var(--primary-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card-solid);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 16px 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: ''; position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: var(--primary);
+        }
+
+        .stat-number { font-size: 22px; font-weight: 900; }
+        .stat-label { font-size: 11px; color: var(--text-sub); margin-top: 4px; }
+
+        .client-card {
+            background: var(--bg-card-solid);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .client-info { display: flex; align-items: center; gap: 12px; }
+
+        .client-avatar {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 94, 0, 0.2), rgba(0, 229, 255, 0.2));
+            border: 1px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; color: var(--primary);
+        }
+
+        .client-badges { display: flex; gap: 6px; margin-top: 4px; }
+
+        .mini-badge {
+            font-size: 10px;
+            background: var(--bg-input);
+            color: var(--text-sub);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .action-btns { display: flex; gap: 6px; }
+
+        .icon-btn {
+            width: 34px; height: 34px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: var(--bg-input);
+            color: var(--text-sub);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+        }
+
+        .client-header-card {
+            background: linear-gradient(135deg, var(--bg-card-solid), rgba(255, 94, 0, 0.1));
+            border: 1px solid var(--border-highlight);
+            border-radius: var(--radius-xl);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .user-avatar-lg {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #ff8c00);
+            color: #000; font-size: 28px; font-weight: 900;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px;
+        }
+
+        /* شبكة الماكروز المتكيفة */
+        .quick-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        .quick-metrics.has-timer {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .metric-item {
+            background: var(--bg-input);
+            padding: 8px 4px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .metric-item .val { font-weight: 800; font-size: 13px; color: var(--primary); }
+        .metric-item .lbl { font-size: 10px; color: var(--text-sub); margin-top: 2px; }
+
+        /* توحيد ستايل جميع الكروت لتصبح مثل كارت الملاحظات */
+        .item-card {
+            background: var(--bg-card-solid);
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--primary);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .item-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .item-card-title { font-weight: 700; color: var(--primary); font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .item-card-body { font-size: 13px; color: var(--text-sub); line-height: 1.6; white-space: pre-line; }
+        .item-card-img { width: 100%; max-height: 180px; object-fit: cover; border-radius: var(--radius-md); margin-bottom: 10px; border: 1px solid var(--border); }
+
+        .tab-nav {
+            display: flex; background: var(--bg-input);
+            padding: 4px; border-radius: var(--radius-lg);
+            margin-bottom: 16px; border: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            flex: 1; padding: 10px; border: none;
+            background: transparent; color: var(--text-sub);
+            font-weight: 700; font-size: 13px;
+            border-radius: var(--radius-md); cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card-solid); color: var(--primary);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .macro-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin: 10px 0;
+            background: var(--bg-input);
+            padding: 8px;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+        .macro-item span { display: block; }
+        .macro-item .m-val { font-weight: 800; font-size: 12px; color: var(--text-main); }
+        .macro-item .m-lbl { font-size: 10px; color: var(--text-sub); }
+
+        .sets-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .set-row {
+            display: flex;
+            justify-content: space-between;
+            background: var(--bg-input);
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            font-size: 12px;
+        }
+
+        .timer-container { 
+            background: var(--bg-card-solid); 
+            border: 1px solid var(--border); 
+            border-right: 4px solid var(--primary); 
+            border-radius: var(--radius-xl); 
+            padding: 24px 16px; 
+            text-align: center; 
+        }
+        
+        .active-exercise-banner {
+            background: var(--bg-input);
+            border: 1px solid var(--border-highlight);
+            border-radius: var(--radius-lg);
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        .active-exercise-banner .ex-name { font-size: 16px; font-weight: 800; color: var(--primary); }
+        .active-exercise-banner .ex-set { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+
+        .circular-timer { position: relative; width: 180px; height: 180px; margin: 0 auto 20px; }
+        .circular-timer svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .circular-timer circle { fill: none; stroke-width: 8; stroke-linecap: round; }
+        .bg-circle { stroke: var(--bg-input); }
+        .progress-circle { stroke: var(--primary); stroke-dasharray: 440; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear, stroke 0.3s; }
+        .timer-text-inside { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+        .timer-display-val { font-size: 36px; font-weight: 900; font-family: monospace; color: var(--text-main); }
+        .timer-status-lbl { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+        .timer-actions { display: flex; justify-content: center; gap: 12px; }
+
+        .btn-control { padding: 12px 24px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--bg-input); color: var(--text-main); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .btn-control.start { background: var(--primary); color: #000; border: none; }
+
+        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 16px; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--bg-card-solid); border: 1px solid var(--border-highlight); border-radius: var(--radius-xl); width: 100%; max-width: 420px; max-height: 85vh; overflow-y: auto; padding: 24px; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-header h3 { font-size: 18px; color: var(--primary); }
+        .close-btn { background: none; border: none; color: var(--text-sub); font-size: 20px; cursor: pointer; }
+
+        .dynamic-row { background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 12px; margin-bottom: 10px; position: relative; }
+        .btn-remove-row { position: absolute; left: 8px; top: 8px; color: var(--danger); background: none; border: none; cursor: pointer; }
+        .btn-add-outline { width: 100%; padding: 10px; border: 1px dashed var(--primary); background: transparent; color: var(--primary); border-radius: var(--radius-md); font-weight: 700; cursor: pointer; margin-bottom: 16px; }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-input);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .app-footer { text-align: center; padding: 16px; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: auto; }
+        .app-footer strong { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <div class="app-shell">
+        <header class="app-header">
+            <a href="#" class="brand">
+                <div class="brand-icon"><i class="fas fa-bolt"></i></div>
+                <div class="brand-text">
+                    <h1>جُرمي</h1>
+                    <p>JERMY FITNESS</p>
+                </div>
+            </a>
+            <button class="theme-btn" id="themeToggleBtn" title="تبديل النمط">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <!-- 1. تسجيل الدخول -->
+        <div class="page active" id="loginPage">
+            <div class="login-wrapper">
+                <div class="login-hero">
+                    <i class="fas fa-dumbbell"></i>
+                    <h2>مرحباً بك في جُرمي</h2>
+                    <p style="color: var(--text-sub); font-size: 13px; margin-top: 4px;">منصة المتابعة الخاصة بالمدرب <strong>محمد بن سلّوم</strong></p>
+                </div>
+<br> 
+                <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
+                    <div class="form-group">
+                        <label>اسم المستخدم</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="loginUser" class="custom-input" placeholder="أدخل اسم المستخدم" required>
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>كلمة المرور</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="loginPass" class="custom-input" placeholder="أدخل كلمة المرور" required>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+
+                    <div id="loginError" style="color: var(--danger); font-size: 13px; margin-bottom: 12px; text-align: center;"></div>
+
+                    <button type="submit" class="btn-primary">
+                        <span>تسجيل الدخول</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 2. لوحة التحكم (المدرب) -->
+        <div class="page" id="adminPage">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <div>
+                    <h2 style="font-size: 18px;">لوحة التحكّم</h2>
+                    <p style="font-size: 12px; color: var(--text-sub);">متابعة إحصائيات وعملاء المنصة</p>
+                </div>
+                <button onclick="logout()" style="background:none; border:none; color:var(--danger); font-size:13px; font-weight:700; cursor:pointer;">
+                    <i class="fas fa-sign-out-alt"></i> خروج
+                </button>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="statClients">0</div>
+                    <div class="stat-label">المشتركين</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statExercises">0</div>
+                    <div class="stat-label">التمارين</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statMeals">0</div>
+                    <div class="stat-label">الوجبات</div>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="openClientModal()" style="margin-bottom: 20px;">
+                <i class="fas fa-user-plus"></i>
+                <span>إضافة مشترك جديد</span>
+            </button>
+
+            <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text-sub);">قائمة المشتركين</h3>
+            <div id="clientsContainer"></div>
+        </div>
+
+        <!-- 3. صفحة المشترك -->
+        <div class="page" id="clientPage">
+            <div class="client-header-card">
+                <button onclick="logout()" style="position: absolute; left: 14px; top: 14px; background:none; border:none; color:var(--danger); cursor:pointer;">
+                    <i class="fas fa-power-off"></i>
+                </button>
+                <div class="user-avatar-lg" id="clientAvatarLetter">أ</div>
+                <h2 id="clientViewName" style="font-size: 20px;">اسم المشترك</h2>
+                <span id="clientViewPhase" style="font-size: 12px; color: var(--primary); font-weight: 700;">المرحلة الأولى</span>
+                
+                <div class="quick-metrics" id="quickMetricsContainer">
+                    <div class="metric-item">
+                        <div class="val" id="clientTotalCalories">0</div>
+                        <div class="lbl">السعرات</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" id="clientTotalProtein">0غ</div>
+                        <div class="lbl">البروتين</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" id="clientTotalFat">0غ</div>
+                        <div class="lbl">الدهون</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="val" id="clientTotalCarbs">0غ</div>
+                        <div class="lbl">الكارب</div>
+                    </div>
+                    <div class="metric-item" id="timerWorkBox">
+                        <div class="val" id="clientWorkTime">30ث</div>
+                        <div class="lbl">وقت التمرين</div>
+                    </div>
+                    <div class="metric-item" id="timerRestBox">
+                        <div class="val" id="clientRestTime">15ث</div>
+                        <div class="lbl">وقت الراحة</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ملاحظات المدرب: ثابتة ومباشرة تحت ملف المشترك -->
+            <div id="coachNotesCard" class="item-card">
+                <div class="item-card-title"><i class="fas fa-comment-dots"></i> ملاحظات المدرب</div>
+                <div class="item-card-body" id="coachNotesText" style="margin-top: 6px;">لا توجد ملاحظات حالياً.</div>
+            </div>
+
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('mealsTab', this)"><i class="fas fa-utensils"></i> التغذية</button>
+                <button class="tab-btn" onclick="switchTab('workoutTab', this)"><i class="fas fa-dumbbell"></i> التمارين</button>
+                <button class="tab-btn" id="timerTabBtn" onclick="switchTab('timerTab', this)"><i class="fas fa-stopwatch"></i> المؤقت</button>
+            </div>
+
+            <div class="tab-content active" id="mealsTab">
+                <div id="mealsListContainer"></div>
+            </div>
+
+            <div class="tab-content" id="workoutTab">
+                <div id="workoutListContainer"></div>
+            </div>
+
+            <div class="tab-content" id="timerTab">
+                <div class="timer-container">
+                    <div class="active-exercise-banner" id="activeExBanner">
+                        <div class="ex-name" id="currentExTitle">اضغط ابدأ لبدء التمرين</div>
+                        <div class="ex-set" id="currentSetTitle">الجلسة -- | -- تكرار</div>
+                    </div>
+
+                    <div class="circular-timer">
+                        <svg>
+                            <circle class="bg-circle" cx="90" cy="90" r="70"></circle>
+                            <circle class="progress-circle" id="timerCircle" cx="90" cy="90" r="70"></circle>
+                        </svg>
+                        <div class="timer-text-inside">
+                            <div class="timer-display-val" id="timerClock">00:30</div>
+                            <div class="timer-status-lbl" id="timerPhaseLabel">جاهز</div>
+                        </div>
+                    </div>
+
+                    <div class="timer-actions">
+                        <button class="btn-control start" id="startTimerBtn" onclick="toggleTimer()">
+                            <i class="fas fa-play"></i> <span>ابدأ</span>
+                        </button>
+                        <button class="btn-control" onclick="resetTimer()">
+                            <i class="fas fa-redo"></i> <span>إعادة</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            جميع الحقوق محفوظة © 2026 | تطوير <strong>جاسم عميران</strong>
+        </footer>
+    </div>
+
+    <!-- نافذة إضافة / تعديل المشترك -->
+    <div class="modal" id="clientModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalHeadTitle">إضافة مشترك جديد</h3>
+                <button class="close-btn" onclick="closeClientModal()">&times;</button>
+            </div>
+            
+            <form onsubmit="event.preventDefault(); saveClientData();">
+                <input type="hidden" id="formOriginalUsername">
+                
+                <div class="form-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" id="formFullName" class="custom-input" placeholder="مثال: أحمد عبد الله" required>
+                </div>
+
+                <div class="form-group">
+                    <label>اسم المستخدم (للدخول)</label>
+                    <input type="text" id="formUsername" class="custom-input" placeholder="مثال: ahmed" required>
+                </div>
+
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="text" id="formPassword" class="custom-input" placeholder="أدخل كلمة المرور" required>
+                </div>
+
+                <div class="form-group">
+                    <label>المرحلة التدريبية</label>
+                    <input type="text" id="formPhase" class="custom-input" placeholder="مثال: الأسبوع الأول">
+                </div>
+
+                <!-- صلاحية المؤقت -->
+                <label class="checkbox-container">
+                    <input type="checkbox" id="formEnableTimer">
+                    <span style="font-size: 13px; font-weight: 700; color: var(--text-main);">تفعيل المؤقت التدريبي لهذا المشترك</span>
+                </label>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>وقت التمرين (ثانية)</label>
+                        <input type="number" id="formWorkTime" class="custom-input" value="30" required>
+                    </div>
+                    <div class="form-group">
+                        <label>وقت الراحة (ثانية)</label>
+                        <input type="number" id="formRestTime" class="custom-input" value="15" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>الخطة الغذائية</label>
+                    <div id="formMealsContainer"></div>
+                    <button type="button" class="btn-add-outline" onclick="addMealInputRow()"><i class="fas fa-plus"></i> إضافة وجبة</button>
+                </div>
+
+                <div class="form-group">
+                    <label>الجدول التدريبي</label>
+                    <div id="formExercisesContainer"></div>
+                    <button type="button" class="btn-add-outline" onclick="addExerciseInputRow()"><i class="fas fa-plus"></i> إضافة تمرين</button>
+                </div>
+
+                <div class="form-group">
+                    <label>ملاحظات المدرب</label>
+                    <textarea id="formNotes" class="custom-input" style="height: 60px; resize: none;"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="margin-top: 10px;">حفظ البيانات</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Modular Scripts (v10) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc, getDocs, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDAFqfT34IZGe0VWodexfhvsQKTx-kDrwk",
+            authDomain: "jermi-a6a80.firebaseapp.com",
+            projectId: "jermi-a6a80",
+            storageBucket: "jermi-a6a80.firebasestorage.app",
+            messagingSenderId: "744532208878",
+            appId: "1:744532208878:web:845b5c434104309fd497ff",
+            measurementId: "G-GHR68R1XQ9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.db = db;
+        window.doc = doc;
+        window.setDoc = setDoc;
+        window.getDoc = getDoc;
+        window.getDocs = getDocs;
+        window.collection = collection;
+        window.deleteDoc = deleteDoc;
+    </script>
+
+    <script>
+        let currentUserKey = null;
+        let activeClientExercises = [];
+
+        const themeBtn = document.getElementById('themeToggleBtn');
+        if (localStorage.getItem('jermy_theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeBtn.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            localStorage.setItem('jermy_theme', isLight ? 'light' : 'dark');
+        });
+
+        async function handleLogin() {
+            const uInput = document.getElementById('loginUser').value.trim();
+            const pInput = document.getElementById('loginPass').value.trim();
+            const errDiv = document.getElementById('loginError');
+            errDiv.textContent = '';
+
+            if (!uInput || !pInput) {
+                errDiv.textContent = 'يرجى ملء جميع الحقول المطلوبة.';
+                return;
+            }
+
+            try {
+                if (uInput === 'mms340114' && pInput === 'mms340802') {
+                    currentUserKey = 'admin';
+                    showPage('adminPage');
+                    renderAdminDashboard();
+                    return;
+                }
+
+                const userDocRef = window.doc(window.db, "users", uInput);
+                const userSnap = await window.getDoc(userDocRef);
+
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    if (userData.password === pInput) {
+                        currentUserKey = uInput;
+                        if (userData.role === 'admin') {
+                            showPage('adminPage');
+                            renderAdminDashboard();
+                        } else {
+                            showPage('clientPage');
+                            renderClientDashboard(userData);
+                        }
+                    } else {
+                        errDiv.textContent = 'كلمة المرور غير صحيحة.';
+                    }
+                } else {
+                    errDiv.textContent = 'اسم المستخدم غير موجود في قاعدة البيانات.';
+                }
+            } catch (error) {
+                console.error("Error logging in:", error);
+                errDiv.textContent = 'حدث خطأ أثناء الاتصال بقاعدة البيانات.';
+            }
+        }
+
+        function logout() {
+            currentUserKey = null;
+            showPage('loginPage');
+            document.getElementById('loginUser').value = '';
+            document.getElementById('loginPass').value = '';
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        async function renderAdminDashboard() {
+            const container = document.getElementById('clientsContainer');
+            container.innerHTML = '<p style="text-align:center; color:var(--text-sub);">جاري تحميل البيانات...</p>';
+
+            try {
+                const querySnapshot = await window.getDocs(window.collection(window.db, "users"));
+                let clientsCount = 0, totalEx = 0, totalMl = 0;
+                container.innerHTML = '';
+
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const key = docSnap.id;
+
+                    if (data.role === 'client') {
+                        clientsCount++;
+                        const exCount = (data.exercises || []).length;
+                        const mlCount = (data.meals || []).length;
+                        totalEx += exCount;
+                        totalMl += mlCount;
+
+                        const card = document.createElement('div');
+                        card.className = 'client-card';
+                        card.innerHTML = `
+                            <div class="client-info">
+                                <div class="client-avatar">${(data.name || key).charAt(0)}</div>
+                                <div class="client-details">
+                                    <h4>${data.name}</h4>
+                                    <div class="client-badges">
+                                        <span class="mini-badge"><i class="fas fa-running"></i> ${exCount} تمارين</span>
+                                        <span class="mini-badge"><i class="fas fa-utensils"></i> ${mlCount} وجبات</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-btns">
+                                <button class="icon-btn edit" onclick="openClientModal('${key}')"><i class="fas fa-edit"></i></button>
+                                <button class="icon-btn delete" onclick="deleteClient('${key}')"><i class="fas fa-trash"></i></button>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    }
+                });
+
+                document.getElementById('statClients').textContent = clientsCount;
+                document.getElementById('statExercises').textContent = totalEx;
+                document.getElementById('statMeals').textContent = totalMl;
+
+                if (clientsCount === 0) {
+                    container.innerHTML = `<p style="text-align:center; color:var(--text-sub); padding: 20px;">لا يوجد مشتركون في قاعدة البيانات.</p>`;
+                }
+            } catch (error) {
+                console.error("Error fetching clients:", error);
+                container.innerHTML = `<p style="text-align:center; color:var(--danger);">خطأ في تحميل البيانات.</p>`;
+            }
+        }
+
+        let tempMeals = [];
+        let tempExercises = [];
+
+        async function openClientModal(userKey = null) {
+            const modal = document.getElementById('clientModal');
+            document.getElementById('formOriginalUsername').value = userKey || '';
+
+            if (userKey) {
+                try {
+                    const userSnap = await window.getDoc(window.doc(window.db, "users", userKey));
+                    if (userSnap.exists()) {
+                        const u = userSnap.data();
+                        document.getElementById('modalHeadTitle').textContent = 'تعديل بيانات المشترك';
+                        document.getElementById('formFullName').value = u.name || '';
+                        document.getElementById('formUsername').value = userKey;
+                        document.getElementById('formPassword').value = u.password || '';
+                        document.getElementById('formPhase').value = u.phase || '';
+                        document.getElementById('formEnableTimer').checked = u.enableTimer || false;
+                        document.getElementById('formWorkTime').value = u.exerciseDuration || 30;
+                        document.getElementById('formRestTime').value = u.restDuration || 15;
+                        document.getElementById('formNotes').value = u.notes || '';
+                        tempMeals = u.meals ? JSON.parse(JSON.stringify(u.meals)) : [];
+                        tempExercises = u.exercises ? JSON.parse(JSON.stringify(u.exercises)) : [];
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            } else {
+                document.getElementById('modalHeadTitle').textContent = 'إضافة مشترك جديد';
+                document.getElementById('formFullName').value = '';
+                document.getElementById('formUsername').value = '';
+                document.getElementById('formPassword').value = '';
+                document.getElementById('formPhase').value = '';
+                document.getElementById('formEnableTimer').checked = false;
+                document.getElementById('formWorkTime').value = 30;
+                document.getElementById('formRestTime').value = 15;
+                document.getElementById('formNotes').value = '';
+                tempMeals = [];
+                tempExercises = [];
+            }
+
+            renderModalMealInputs();
+            renderModalExerciseInputs();
+            modal.classList.add('active');
+        }
+
+        function closeClientModal() {
+            document.getElementById('clientModal').classList.remove('active');
+        }
+
+        function addMealInputRow() {
+            tempMeals.push({ name: '', description: '', calories: '', protein: '', fat: '', carbs: '', image: '' });
+            renderModalMealInputs();
+        }
+
+        function removeMealInputRow(idx) {
+            tempMeals.splice(idx, 1);
+            renderModalMealInputs();
+        }
+
+        function renderModalMealInputs() {
+            const container = document.getElementById('formMealsContainer');
+            container.innerHTML = '';
+            tempMeals.forEach((m, i) => {
+                const div = document.createElement('div');
+                div.className = 'dynamic-row';
+                div.innerHTML = `
+                    <button type="button" class="btn-remove-row" onclick="removeMealInputRow(${i})"><i class="fas fa-times"></i></button>
+                    <input type="text" class="custom-input" style="margin-bottom:6px;" placeholder="اسم الوجبة" value="${m.name || ''}" onchange="tempMeals[${i}].name = this.value">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap:4px; margin-bottom:6px;">
+                        <input type="number" class="custom-input" style="padding:8px 4px; text-align:center; font-size:11px;" placeholder="سعرات" value="${m.calories || ''}" onchange="tempMeals[${i}].calories = this.value">
+                        <input type="number" class="custom-input" style="padding:8px 4px; text-align:center; font-size:11px;" placeholder="بروتين (غ)" value="${m.protein || ''}" onchange="tempMeals[${i}].protein = this.value">
+                        <input type="number" class="custom-input" style="padding:8px 4px; text-align:center; font-size:11px;" placeholder="دهون (غ)" value="${m.fat || ''}" onchange="tempMeals[${i}].fat = this.value">
+                        <input type="number" class="custom-input" style="padding:8px 4px; text-align:center; font-size:11px;" placeholder="كارب (غ)" value="${m.carbs || ''}" onchange="tempMeals[${i}].carbs = this.value">
+                    </div>
+                    <input type="url" class="custom-input" style="margin-bottom:6px;" placeholder="رابط صورة الوجبة (اختياري)" value="${m.image || ''}" onchange="tempMeals[${i}].image = this.value">
+                    <textarea class="custom-input" style="margin-bottom:6px; height:70px; resize:vertical;" placeholder="الوصف (اكتب كل عنصر في سطر)" onchange="tempMeals[${i}].description = this.value">${m.description || ''}</textarea>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function addExerciseInputRow() {
+            tempExercises.push({ name: '', setsList: [{ reps: 10 }], image: '' });
+            renderModalExerciseInputs();
+        }
+
+        function removeExerciseInputRow(idx) {
+            tempExercises.splice(idx, 1);
+            renderModalExerciseInputs();
+        }
+
+        function addSetToExercise(exIndex) {
+            if (!tempExercises[exIndex].setsList) tempExercises[exIndex].setsList = [];
+            tempExercises[exIndex].setsList.push({ reps: 10 });
+            renderModalExerciseInputs();
+        }
+
+        function removeSetFromExercise(exIndex, setIndex) {
+            tempExercises[exIndex].setsList.splice(setIndex, 1);
+            renderModalExerciseInputs();
+        }
+
+        function renderModalExerciseInputs() {
+            const container = document.getElementById('formExercisesContainer');
+            container.innerHTML = '';
+            tempExercises.forEach((ex, i) => {
+                const sets = ex.setsList || [];
+                let setsHtml = '';
+                sets.forEach((s, sIdx) => {
+                    setsHtml += `
+                        <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
+                            <span style="font-size:11px; color:var(--text-sub);">الجلسة ${sIdx + 1}:</span>
+                            <input type="number" class="custom-input" style="padding:4px 8px; font-size:12px;" placeholder="التكرار" value="${s.reps || ''}" onchange="tempExercises[${i}].setsList[${sIdx}].reps = this.value">
+                            <button type="button" onclick="removeSetFromExercise(${i}, ${sIdx})" style="color:var(--danger); background:none; border:none;"><i class="fas fa-minus-circle"></i></button>
+                        </div>
+                    `;
+                });
+
+                const div = document.createElement('div');
+                div.className = 'dynamic-row';
+                div.innerHTML = `
+                    <button type="button" class="btn-remove-row" onclick="removeExerciseInputRow(${i})"><i class="fas fa-times"></i></button>
+                    <input type="text" class="custom-input" style="margin-bottom:6px;" placeholder="اسم التمرين" value="${ex.name || ''}" onchange="tempExercises[${i}].name = this.value">
+                    <input type="url" class="custom-input" style="margin-bottom:6px;" placeholder="رابط صورة أو GIF التمرين" value="${ex.image || ''}" onchange="tempExercises[${i}].image = this.value">
+                    <div style="margin-top:6px; background:var(--bg-card-solid); padding:8px; border-radius:8px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <span style="font-size:12px; font-weight:700;">الجلسات والتكرارات:</span>
+                            <button type="button" onclick="addSetToExercise(${i})" style="font-size:11px; color:var(--primary); background:none; border:none; cursor:pointer;"><i class="fas fa-plus"></i> إضافة جلسة</button>
+                        </div>
+                        ${setsHtml}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        async function saveClientData() {
+            const newKey = document.getElementById('formUsername').value.trim();
+            const name = document.getElementById('formFullName').value.trim();
+            const pass = document.getElementById('formPassword').value.trim();
+
+            if (!newKey || !pass || !name) {
+                alert('يرجى ملء الحقول الرئيسية');
+                return;
+            }
+
+            const clientData = {
+                role: 'client',
+                password: pass,
+                name: name,
+                phase: document.getElementById('formPhase').value.trim(),
+                enableTimer: document.getElementById('formEnableTimer').checked,
+                exerciseDuration: parseInt(document.getElementById('formWorkTime').value) || 30,
+                restDuration: parseInt(document.getElementById('formRestTime').value) || 15,
+                meals: tempMeals.filter(m => m.name && m.name.trim() !== ''),
+                exercises: tempExercises.filter(e => e.name && e.name.trim() !== ''),
+                notes: document.getElementById('formNotes').value.trim()
+            };
+
+            try {
+                await window.setDoc(window.doc(window.db, "users", newKey), clientData);
+                closeClientModal();
+                renderAdminDashboard();
+            } catch (error) {
+                console.error("Error saving data:", error);
+                alert("حدث خطأ أثناء الحفظ في Firebase");
+            }
+        }
+
+        async function deleteClient(key) {
+            if (confirm(`هل أنت تأكد من حذف المشترك "${key}"؟`)) {
+                try {
+                    await window.deleteDoc(window.doc(window.db, "users", key));
+                    renderAdminDashboard();
+                } catch (error) {
+                    console.error("Error deleting user:", error);
+                }
+            }
+        }
+
+        function renderClientDashboard(u) {
+            document.getElementById('clientAvatarLetter').textContent = (u.name || 'أ').charAt(0);
+            document.getElementById('clientViewName').textContent = u.name;
+            document.getElementById('clientViewPhase').textContent = u.phase || 'المرحلة الأولى';
+
+            // التحكم في طريقة عرض الماكروز والمؤقت
+            const timerBtn = document.getElementById('timerTabBtn');
+            const workBox = document.getElementById('timerWorkBox');
+            const restBox = document.getElementById('timerRestBox');
+            const metricsContainer = document.getElementById('quickMetricsContainer');
+
+            if (u.enableTimer) {
+                timerBtn.style.display = 'block';
+                workBox.style.display = 'block';
+                restBox.style.display = 'block';
+                metricsContainer.classList.add('has-timer');
+                document.getElementById('clientWorkTime').textContent = `${u.exerciseDuration || 30}ث`;
+                document.getElementById('clientRestTime').textContent = `${u.restDuration || 15}ث`;
+            } else {
+                timerBtn.style.display = 'none';
+                workBox.style.display = 'none';
+                restBox.style.display = 'none';
+                metricsContainer.classList.remove('has-timer');
+                switchTab('mealsTab', document.querySelector('.tab-btn'));
+            }
+
+            let totalCals = 0, totalProt = 0, totalFat = 0, totalCarb = 0;
+            const mealsContainer = document.getElementById('mealsListContainer');
+            mealsContainer.innerHTML = '';
+            (u.meals || []).forEach(m => {
+                totalCals += parseInt(m.calories) || 0;
+                totalProt += parseInt(m.protein) || 0;
+                totalFat += parseInt(m.fat) || 0;
+                totalCarb += parseInt(m.carbs) || 0;
+
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    ${m.image ? `<img src="${m.image}" class="item-card-img" alt="${m.name}">` : ''}
+                    <div class="item-card-header">
+                        <span class="item-card-title"><i class="fas fa-utensils"></i> ${m.name}</span>
+                    </div>
+                    <div class="macro-grid">
+                        <div class="macro-item"><span class="m-val">${m.calories || 0}</span><span class="m-lbl">سعرة</span></div>
+                        <div class="macro-item"><span class="m-val">${m.protein || 0}غ</span><span class="m-lbl">بروتين</span></div>
+                        <div class="macro-item"><span class="m-val">${m.fat || 0}غ</span><span class="m-lbl">دهون</span></div>
+                        <div class="macro-item"><span class="m-val">${m.carbs || 0}غ</span><span class="m-lbl">كارب</span></div>
+                    </div>
+                    <div class="item-card-body">${m.description || ''}</div>
+                `;
+                mealsContainer.appendChild(card);
+            });
+
+            document.getElementById('clientTotalCalories').textContent = totalCals;
+            document.getElementById('clientTotalProtein').textContent = `${totalProt}غ`;
+            document.getElementById('clientTotalFat').textContent = `${totalFat}غ`;
+            document.getElementById('clientTotalCarbs').textContent = `${totalCarb}غ`;
+
+            activeClientExercises = u.exercises || [];
+            const workoutContainer = document.getElementById('workoutListContainer');
+            workoutContainer.innerHTML = '';
+            activeClientExercises.forEach(ex => {
+                let setsHtml = '';
+                const sets = ex.setsList || [];
+                sets.forEach((s, sIdx) => {
+                    setsHtml += `
+                        <div class="set-row">
+                            <span>الجلسة ${sIdx + 1}</span>
+                            <span style="color:var(--primary); font-weight:700;">${s.reps} تكرارات</span>
+                        </div>
+                    `;
+                });
+
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    ${ex.image ? `<img src="${ex.image}" class="item-card-img" alt="${ex.name}">` : ''}
+                    <div class="item-card-header">
+                        <span class="item-card-title"><i class="fas fa-running"></i> ${ex.name}</span>
+                        <span class="badge" style="background:rgba(255,94,0,0.1); color:var(--primary); font-size:11px; padding:2px 8px; border-radius:6px;">${sets.length} جلسات</span>
+                    </div>
+                    <div class="sets-list">
+                        ${setsHtml}
+                    </div>
+                `;
+                workoutContainer.appendChild(card);
+            });
+
+            document.getElementById('coachNotesText').textContent = u.notes || 'لا توجد ملاحظات من المدرب حالياً.';
+            initTimerEngine(u);
+        }
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        let timerInterval = null;
+        let isRunning = false;
+        let isRestPhase = false;
+        let currentSec = 30;
+        let maxSec = 30;
+        let workDuration = 30;
+        let restDuration = 15;
+
+        let currentExIndex = 0;
+        let currentSetIndex = 0;
+
+        function initTimerEngine(userObj) {
+            clearInterval(timerInterval);
+            isRunning = false;
+            isRestPhase = false;
+            workDuration = userObj.exerciseDuration || 30;
+            restDuration = userObj.restDuration || 15;
+            currentExIndex = 0;
+            currentSetIndex = 0;
+            maxSec = workDuration;
+            currentSec = maxSec;
+            updateTimerBanner();
+            updateTimerUI();
+        }
+
+        function updateTimerBanner() {
+            const exTitle = document.getElementById('currentExTitle');
+            const setTitle = document.getElementById('currentSetTitle');
+
+            if (!activeClientExercises || activeClientExercises.length === 0) {
+                exTitle.textContent = "لا توجد تمارين محددة";
+                setTitle.textContent = "--";
+                return;
+            }
+
+            const currentEx = activeClientExercises[currentExIndex];
+            if (currentEx) {
+                exTitle.textContent = currentEx.name;
+                const sets = currentEx.setsList || [];
+                const currentSet = sets[currentSetIndex];
+                if (currentSet) {
+                    setTitle.textContent = `الجلسة ${currentSetIndex + 1} من ${sets.length} | ${currentSet.reps} تكرار`;
+                } else {
+                    setTitle.textContent = `الجلسة ${currentSetIndex + 1} من ${sets.length}`;
+                }
+            } else {
+                exTitle.textContent = "أحسنت! أكملت جميع التمارين 🎉";
+                setTitle.textContent = "تم إنجاز التدريب بنجاح";
+            }
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('startTimerBtn');
+            if (isRunning) {
+                clearInterval(timerInterval);
+                isRunning = false;
+                btn.innerHTML = '<i class="fas fa-play"></i> <span>استئناف</span>';
+            } else {
+                if (activeClientExercises.length > 0 && currentExIndex >= activeClientExercises.length) {
+                    currentExIndex = 0;
+                    currentSetIndex = 0;
+                }
+                isRunning = true;
+                btn.innerHTML = '<i class="fas fa-pause"></i> <span>إيقاف</span>';
+                updateTimerBanner();
+
+                timerInterval = setInterval(() => {
+                    currentSec--;
+                    updateTimerUI();
+                    if (currentSec <= 0) {
+                        if (!isRestPhase) {
+                            isRestPhase = true;
+                            maxSec = restDuration;
+                            currentSec = maxSec;
+                        } else {
+                            isRestPhase = false;
+                            advanceToNextSet();
+                            maxSec = workDuration;
+                            currentSec = maxSec;
+                        }
+                        updateTimerBanner();
+                        updateTimerUI();
+                    }
+                }, 1000);
+            }
+        }
+
+        function advanceToNextSet() {
+            if (!activeClientExercises || activeClientExercises.length === 0) return;
+
+            const currentEx = activeClientExercises[currentExIndex];
+            const sets = currentEx.setsList || [];
+
+            if (currentSetIndex < sets.length - 1) {
+                currentSetIndex++;
+            } else {
+                currentSetIndex = 0;
+                currentExIndex++;
+                if (currentExIndex >= activeClientExercises.length) {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    document.getElementById('startTimerBtn').innerHTML = '<i class="fas fa-play"></i> <span>إعادة البدء</span>';
+                }
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            isRestPhase = false;
+            currentExIndex = 0;
+            currentSetIndex = 0;
+            maxSec = workDuration;
+            currentSec = maxSec;
+            document.getElementById('startTimerBtn').innerHTML = '<i class="fas fa-play"></i> <span>ابدأ</span>';
+            updateTimerBanner();
+            updateTimerUI();
+        }
+
+        function updateTimerUI() {
+            const minutes = Math.floor(currentSec / 60);
+            const seconds = currentSec % 60;
+            document.getElementById('timerClock').textContent = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            document.getElementById('timerPhaseLabel').textContent = isRestPhase ? 'راحة' : 'تمرّن الآن!';
+            document.getElementById('timerPhaseLabel').style.color = isRestPhase ? 'var(--secondary)' : 'var(--primary)';
+
+            const circle = document.getElementById('timerCircle');
+            const circumference = 2 * Math.PI * 70;
+            const offset = circumference - (currentSec / maxSec) * circumference;
+            circle.style.strokeDashoffset = offset;
+            circle.style.stroke = isRestPhase ? 'var(--secondary)' : 'var(--primary)';
+        }
+
+        window.onload = function() {
+            showPage('loginPage');
+        };
+    </script>
+</body>
+</html>
